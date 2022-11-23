@@ -1,0 +1,28 @@
+leMethodName + '".');
+        }
+
+        // If the property is reasonably close to an existing Chai property,
+        // suggest that property to the user. Only suggest properties with a
+        // distance less than 4.
+        var suggestion = null;
+        var suggestionDistance = 4;
+        getProperties(target).forEach(function(prop) {
+          if (
+            !Object.prototype.hasOwnProperty(prop) &&
+            builtins.indexOf(prop) === -1
+          ) {
+            var dist = stringDistanceCapped(
+              property,
+              prop,
+              suggestionDistance
+            );
+            if (dist < suggestionDistance) {
+              suggestion = prop;
+              suggestionDistance = dist;
+            }
+          }
+        });
+
+        if (suggestion !== null) {
+          throw Error('Invalid Chai property: ' + property +
+ 
